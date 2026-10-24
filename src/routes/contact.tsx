@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { MapPin, MessageCircle } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { venue } from "@/data/venue";
-import { Card, Disclaimer, PageHeading, PhotoPlaceholder } from "@/components/site";
+import { Disclaimer, HoursBlock, PageHero, PhotoPlaceholder } from "@/components/site";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -10,6 +11,8 @@ export const Route = createFileRoute("/contact")({
       { name: "description", content: "Horaires provisoires et accès de Le Cavalier 23, à confirmer." },
       { property: "og:title", content: "Accès & contact — Le Cavalier 23" },
       { property: "og:description", content: "Horaires provisoires, à confirmer." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),
@@ -19,28 +22,36 @@ export const Route = createFileRoute("/contact")({
 function ContactPage() {
   const { t } = useI18n();
   return (
-    <div className="mx-auto max-w-5xl px-4 py-8">
-      <PageHeading>{t("contactTitle")}</PageHeading>
-      {venue.mapEmbedUrl ? (
-        <iframe title="Google Maps" src={venue.mapEmbedUrl} className="aspect-video w-full rounded-2xl border" loading="lazy" />
-      ) : (
-        <div>
-          <PhotoPlaceholder label={t("mapPending")} className="aspect-video" />
-          <p className="mt-2 text-sm text-muted-foreground">{t("mapPendingSub")}</p>
+    <>
+      <PageHero eyebrow={t("contactEyebrow")} title={t("contactTitle")} intro={t("contactIntro")} />
+      <div className="mx-auto max-w-6xl px-5 py-16 lg:px-8">
+        <div className="grid gap-6 lg:grid-cols-12">
+          <div className="lg:col-span-8">
+            {venue.mapEmbedUrl ? (
+              <iframe title="Google Maps" src={venue.mapEmbedUrl} className="aspect-[4/3] w-full rounded-lg border shadow-soft" loading="lazy" />
+            ) : (
+              <PhotoPlaceholder label={t("mapPending")} light className="aspect-[4/3] rounded-lg" />
+            )}
+            <p className="mt-3 flex gap-2 text-sm text-muted-foreground">
+              <MapPin className="h-4 w-4 shrink-0 text-cobalt" aria-hidden />
+              {t("mapPendingSub")}
+            </p>
+          </div>
+          <div className="space-y-6 lg:col-span-4">
+            <div className="pattern-arches rounded-lg p-7 text-primary-foreground shadow-lift">
+              <HoursBlock dark />
+            </div>
+            <div className="rounded-lg border bg-card p-7 shadow-soft">
+              <p className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-cobalt">
+                <MessageCircle className="h-4 w-4" aria-hidden />
+                {t("phoneTitle")}
+              </p>
+              <p className="mt-3 font-display text-2xl">{venue.whatsapp ?? t("phonePending")}</p>
+            </div>
+          </div>
         </div>
-      )}
-      <div className="mt-6 grid gap-4 sm:grid-cols-2">
-        <Card>
-          <h2 className="text-lg font-semibold text-primary">{t("hoursTitle")}</h2>
-          <p className="mt-1 text-xl" dir="ltr">{venue.hours.open} – {venue.hours.close}</p>
-          <p className="text-sm text-muted-foreground">{t("hoursNote")}</p>
-        </Card>
-        <Card>
-          <h2 className="text-lg font-semibold text-primary">{t("phoneTitle")}</h2>
-          <p className="mt-1 text-xl">{venue.whatsapp ?? t("phonePending")}</p>
-        </Card>
+        <Disclaimer />
       </div>
-      <Disclaimer />
-    </div>
+    </>
   );
 }
