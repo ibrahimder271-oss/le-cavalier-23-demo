@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- All venue facts and placeholder data live in src/data/venue.ts and all UI strings (fr/ar) in src/lib/i18n.tsx — keeps content editable in one place for a beginner.
