@@ -4,10 +4,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Design system for Le Cavalier 23 — warm sand/cream + deep navy, restrained evening amber. */
+/* Le Cavalier 23 — ivory + midnight navy, cobalt (Annaba blue-and-white) and brass evening accents. */
 
 @theme inline {
-  --font-display: "Fraunces", "Tajawal", serif;
+  --font-display: "Fraunces", "Amiri", serif;
   --font-sans: "Work Sans", "Tajawal", system-ui, sans-serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -28,6 +28,9 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-cobalt: var(--cobalt);
+  --color-cobalt-foreground: var(--cobalt-foreground);
+  --color-brass: var(--brass);
   --color-warning: var(--warning);
   --color-warning-foreground: var(--warning-foreground);
   --color-destructive: var(--destructive);
@@ -35,32 +38,42 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --shadow-soft: var(--shadow-soft-v);
+  --shadow-lift: var(--shadow-lift-v);
 }
 
 :root {
-  --radius: 0.75rem;
-  --background: oklch(0.965 0.018 80);
-  --foreground: oklch(0.24 0.05 258);
-  --card: oklch(0.99 0.008 85);
-  --card-foreground: oklch(0.24 0.05 258);
-  --popover: oklch(0.99 0.008 85);
-  --popover-foreground: oklch(0.24 0.05 258);
-  --primary: oklch(0.3 0.08 258);
-  --primary-foreground: oklch(0.97 0.015 85);
-  --secondary: oklch(0.91 0.035 78);
-  --secondary-foreground: oklch(0.28 0.06 258);
-  --muted: oklch(0.93 0.022 80);
-  --muted-foreground: oklch(0.45 0.04 258);
-  --accent: oklch(0.72 0.13 62);
-  --accent-foreground: oklch(0.22 0.04 258);
-  --warning: oklch(0.93 0.06 85);
-  --warning-foreground: oklch(0.36 0.08 60);
+  --radius: 0.5rem;
+  --background: oklch(0.975 0.012 85);
+  --foreground: oklch(0.2 0.05 262);
+  --card: oklch(0.993 0.006 85);
+  --card-foreground: oklch(0.2 0.05 262);
+  --popover: oklch(0.993 0.006 85);
+  --popover-foreground: oklch(0.2 0.05 262);
+  /* midnight navy */
+  --primary: oklch(0.22 0.06 262);
+  --primary-foreground: oklch(0.97 0.014 85);
+  --secondary: oklch(0.935 0.022 82);
+  --secondary-foreground: oklch(0.24 0.06 262);
+  --muted: oklch(0.93 0.018 82);
+  --muted-foreground: oklch(0.46 0.035 262);
+  /* brass / amber */
+  --accent: oklch(0.74 0.12 72);
+  --accent-foreground: oklch(0.2 0.05 262);
+  --brass: oklch(0.68 0.11 70);
+  /* cobalt / royal blue */
+  --cobalt: oklch(0.45 0.19 262);
+  --cobalt-foreground: oklch(0.98 0.01 85);
+  --warning: oklch(0.94 0.05 85);
+  --warning-foreground: oklch(0.38 0.08 60);
   --destructive: oklch(0.55 0.2 27);
   --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.86 0.03 78);
-  --input: oklch(0.82 0.03 78);
-  --ring: oklch(0.55 0.14 255);
-  --pattern-line: oklch(1 0 0 / 0.09);
+  --border: oklch(0.88 0.022 80);
+  --input: oklch(0.84 0.025 80);
+  --ring: oklch(0.5 0.18 262);
+  --pattern-line: oklch(1 0 0 / 0.07);
+  --shadow-soft-v: 0 1px 2px oklch(0.22 0.06 262 / 0.05), 0 8px 24px -12px oklch(0.22 0.06 262 / 0.18);
+  --shadow-lift-v: 0 2px 4px oklch(0.22 0.06 262 / 0.06), 0 24px 48px -20px oklch(0.22 0.06 262 / 0.35);
 }
 
 @layer base {
@@ -74,13 +87,18 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
   }
   h1, h2, h3 {
     font-family: var(--font-display);
+    letter-spacing: -0.015em;
+  }
+  [dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3 {
+    letter-spacing: 0;
   }
   :focus-visible {
-    outline: 3px solid var(--color-ring);
-    outline-offset: 2px;
+    outline: 2px solid var(--color-ring);
+    outline-offset: 3px;
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -91,21 +109,50 @@
   }
 }
 
-/* Subtle white architectural arches over navy surfaces */
+/* White architectural arches over navy surfaces */
 @utility pattern-arches {
   background-color: var(--color-primary);
   background-image:
-    radial-gradient(circle at 50% 100%, transparent 18px, var(--pattern-line) 19px, var(--pattern-line) 20px, transparent 21px),
-    linear-gradient(90deg, transparent 39px, var(--pattern-line) 40px);
-  background-size: 40px 40px;
+    radial-gradient(circle at 50% 100%, transparent 22px, var(--pattern-line) 23px, var(--pattern-line) 24px, transparent 25px),
+    linear-gradient(90deg, transparent 47px, var(--pattern-line) 48px);
+  background-size: 48px 48px;
 }
 
-/* Neutral striped placeholder for future owner-approved photos */
+/* Fine cobalt tile grid on ivory */
+@utility pattern-tiles {
+  background-image:
+    linear-gradient(oklch(0.45 0.19 262 / 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(0.45 0.19 262 / 0.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Elegant placeholder for future owner-approved photos */
 @utility photo-placeholder {
-  background-color: var(--color-muted);
-  background-image: repeating-linear-gradient(
-    135deg,
-    transparent 0 14px,
-    oklch(0.3 0.08 258 / 0.05) 14px 28px
-  );
+  background-color: var(--color-primary);
+  background-image:
+    radial-gradient(120% 80% at 20% 0%, oklch(0.45 0.19 262 / 0.55), transparent 60%),
+    radial-gradient(90% 70% at 100% 100%, oklch(0.68 0.11 70 / 0.35), transparent 60%),
+    repeating-linear-gradient(135deg, transparent 0 18px, oklch(1 0 0 / 0.03) 18px 36px);
+}
+
+@utility photo-placeholder-light {
+  background-color: var(--color-secondary);
+  background-image:
+    radial-gradient(100% 80% at 0% 0%, oklch(0.45 0.19 262 / 0.12), transparent 60%),
+    repeating-linear-gradient(135deg, transparent 0 18px, oklch(0.22 0.06 262 / 0.035) 18px 36px);
+}
+
+/* Arch-shaped top for image frames */
+@utility arch-top {
+  border-top-left-radius: 999px 60%;
+  border-top-right-radius: 999px 60%;
+}
+
+@utility rise-in {
+  animation: rise-in 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
 }
