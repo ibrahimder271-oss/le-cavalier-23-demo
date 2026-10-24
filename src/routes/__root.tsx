@@ -12,6 +12,8 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { I18nProvider } from "@/lib/i18n";
+import { SiteHeader, SiteFooter } from "@/components/site";
 
 function NotFoundComponent() {
   return (
@@ -125,8 +127,16 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <I18nProvider>
+        <div className="flex min-h-screen flex-col bg-background text-foreground">
+          <SiteHeader />
+          <main id="main" className="flex-1">
+            {/* Required: nested routes render here. */}
+            <Outlet />
+          </main>
+          <SiteFooter />
+        </div>
+      </I18nProvider>
     </QueryClientProvider>
   );
 }
